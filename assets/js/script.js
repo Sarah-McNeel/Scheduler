@@ -1,20 +1,46 @@
-function settingDate(date, day) {
-    date = new Date(date);
-    date.setDate(day);
-    date.setHours(23);
+let currentDay = $("#currentDay");
+let currentDate = moment().format("MMMM Do YYYY");
+let currentHour = moment().format("H");
+let tasksToDo = [];
+let toDoRow = $(".row");
+let taskArea = $(".container");
+
+var moment = moment().format();
+
+//scheduler column time information
+
+function beginScheduler() {
+    toDoRow.each(function () {
+        var hourRow = $(this);
+        var hourRowHr = parseInt(hourRow.attr("data-hour"));
+
+        var toDoObj = {
+            hour: hourRowHr,
+            text: "",
+        }
+        tasksToDo.push(toDoObj);
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasksToDo));
+};
+
+currentDay.text(currentDate);
+
+// save the tasks
+
+function saveTask() {
+    var tasksToDoHour = $(this).parent().attr("data-hour");
+    var taskAdd = (($(this).parent()).children("textarea")).val();
+    for (var i = 0; i < tasksToDo.length; i++) {
+        if (tasksToDo[i].hour == tasksToDoHour) {
+            tasksToDo[i].text = taskAdd;
+            taskArea.on("click", "button", saveTask);
+        }
+    }
+    localStorage.setItem("tasks", JSON.stringify(tasksToDo));
+    getSchedule();
 }
-function getDatesBetween(date1, date2) {
-    let range1 = new Date(date1);
-    let range2 = new Date(date2);
-    date1 = settingDate(date1, 31);
-    date2 = settingDate(date2, 31);
-    console.log(date1 + " " + date2);
-}
-
-let content = getDatesBetween("2020/10/01", "2020/10/31");
-document.getElById("calendar").innerHTML = content;
 
 
 
 
- 
+
