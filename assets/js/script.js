@@ -36,9 +36,22 @@ function saveTask() {
             taskArea.on("click", "button", saveTask);
         }
     }
+
+    const changeClasses = function () {
+        let timeSlotEl = $("tbody").children();
+    };
+    for (let i = 0; i < timeSlotEl.length; i++)
+
+        if (currentId == currentHour) {
+            let classes = ["table-active", "table-primary", "table-success"];
+            $(currentEl).prevAll().addClass("table-active");
+            $(currentEl).addClass("table-primary");
+            $(currentEl).nextAll().addClass("table-light");
+        };
+
     localStorage.setItem("tasks", JSON.stringify(tasksToDo));
     getSchedule();
-}
+};
 
 
 
